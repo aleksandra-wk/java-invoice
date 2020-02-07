@@ -21,20 +21,20 @@ public class Invoice {
 	}
 
 	public void addProduct(Product product, Integer quantity) {
-		if (products.containsKey(product)) {
-			int a = products.get(product);
-			products.put(product,quantity+1);
+		if (!(quantity <= 0)) {
+			products.put(product, quantity);
+		} else {
+			throw new IllegalArgumentException();
 		}
-		products.put(product,quantity);
 	}
 
 	public BigDecimal getNetPrice() {
-		BigDecimal sum = new BigDecimal ("0");
-		for(Product s : this.products.keySet()){
-			Integer amount = this.products.get(s);
-			BigDecimal a = new BigDecimal(amount);
-			BigDecimal price = s.getPrice();
-			sum = sum.add(price.multiply(a));
+		BigDecimal sum = BigDecimal.ZERO;
+		for(Product product : this.products.keySet()){
+			Integer amount = this.products.get(product);
+			BigDecimal quantity = new BigDecimal(amount);
+			BigDecimal price = product.getPrice();
+			sum = sum.add(price.multiply(quantity));
 		}
 		return sum;
 	}
@@ -44,11 +44,11 @@ public class Invoice {
 	}
 
 	public BigDecimal getGrossPrice() {
-		BigDecimal gross = new BigDecimal("0");
-		for(Product s : this.products.keySet()){
-			BigDecimal a = new BigDecimal(this.products.get(s));
-			BigDecimal tax = s.getPriceWithTax().subtract(s.getPrice());
-			gross = gross.add(tax.multiply(a));
+		BigDecimal gross = BigDecimal.ZERO;
+		for(Product product : this.products.keySet()){
+			BigDecimal quantity = new BigDecimal(this.products.get(product));
+			BigDecimal price = product.getPriceWithTax();
+			gross = gross.add(price.multiply(quantity));
 		}
 		return gross;
 	}
