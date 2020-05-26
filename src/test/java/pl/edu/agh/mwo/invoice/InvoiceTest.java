@@ -115,5 +115,39 @@ public class InvoiceTest {
 		Invoice invoice2 = new Invoice();
 		Assert.assertThat(invoice.getNumber(), Matchers.comparesEqualTo(invoice2.getNumber() - 1));
 	}
-
+	
+	@Test
+	public void testPrintedInvoiceStartsWithANumber() {
+	    String printout = invoice.printInvoice();
+	    Assert.assertEquals(Integer.toString(invoice.getNumber()), printout.split("\n")[0]);
+	}
+	
+	@Test
+	public void testPrintedInvoiceShowsZeroForEmpty() {
+	       String printout = invoice.printInvoice();
+	       Assert.assertEquals("Liczba pozycji: " + String.valueOf(0), printout.split("\n")[1]);
+	}
+	
+	@Test
+	public void testPrintedInvoiceShowsCorrectAmountOfProducts() {
+            invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")), 2);
+            invoice.addProduct(new DairyProduct("Chedar", new BigDecimal("10")), 3);
+            invoice.addProduct(new OtherProduct("Pinezka", new BigDecimal("0.01")), 1000);
+            String printout = invoice.printInvoice();
+            Assert.assertEquals("Liczba pozycji: " + String.valueOf(3),printout.split("\n")[4]);
+	}
+	
+        @Test
+        public void testPrintedInvoiceShowsCorrectNumberOfItems() {
+            invoice.addProduct(new TaxFreeProduct("Warzywa", new BigDecimal("199.99")),4);
+            String printout = invoice.printInvoice();
+            Assert.assertEquals(String.valueOf(4),printout.split("\n")[1].split(" ")[1].split(",")[0]);
+        }
+	
+	@Test
+	public void testPrintedInvoiceShowsCorrectFormatOfPrices() {
+	    invoice.addProduct(new TaxFreeProduct("Warzywa", new BigDecimal("199.99")));
+	    String printout = invoice.printInvoice();
+	    Assert.assertEquals(String.format("%.2f", 199.99),printout.split("\n")[1].split(" ")[2]);
+	}
 }

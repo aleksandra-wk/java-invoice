@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import pl.edu.agh.mwo.invoice.product.Product;
@@ -47,6 +48,20 @@ public class Invoice {
             totalGross = totalGross.add(product.getPriceWithTax().multiply(quantity));
         }
         return totalGross;
+    }
+    
+    public String printInvoice() {
+        StringBuffer printout = new StringBuffer(Integer.toString(this.number));
+        printout.append("\n");
+        
+        for (Map.Entry<Product, Integer> pair :products.entrySet()) {
+            String nextLine = pair.getKey().getName() + ", " + Integer.toString(pair.getValue()) + ", " + pair.getKey().getPriceWithTax().setScale(2, RoundingMode.HALF_UP) + "\n";
+            printout.append(nextLine);
+        }
+        
+        String summary = "Liczba pozycji: " + Integer.toString(products.size()); 
+        printout.append(summary.toString());
+        return printout.toString();
     }
 
     public int getNumber() {
