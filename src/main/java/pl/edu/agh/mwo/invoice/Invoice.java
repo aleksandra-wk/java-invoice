@@ -55,7 +55,10 @@ public class Invoice {
         printout.append("\n");
         
         for (Map.Entry<Product, Integer> pair :products.entrySet()) {
-            String nextLine = pair.getKey().getName() + ", " + Integer.toString(pair.getValue()) + ", " + pair.getKey().getPriceWithTax().setScale(2, RoundingMode.HALF_UP) + "\n";
+            String nextLine = pair.getKey().getName() + ", " 
+                             + Integer.toString(pair.getValue()) + ", " 
+                             + pair.getKey().getPriceWithTax().setScale(2, RoundingMode.HALF_UP)
+                             + "\n";
             printout.append(nextLine);
         }
         
