@@ -20,7 +20,8 @@ public abstract class ExciseDutyProduct extends Product {
     }
 
     public BigDecimal getPriceWithTax() {
-        return this.getPrice().multiply(this.getTaxPercent()).add(this.getPrice()).add(this.getExciseDuty());
+        return this.getPrice().multiply(this.getTaxPercent())
+                .add(this.getPrice()).add(this.getExciseDuty());
     }
 
 }

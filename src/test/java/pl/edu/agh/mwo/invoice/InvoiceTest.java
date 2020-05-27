@@ -19,6 +19,11 @@ import pl.edu.agh.mwo.invoice.product.FuelCanister;
 
 public class InvoiceTest {
 	private Invoice invoice;
+	
+        @Before
+        public void createEmptyInvoiceForTheTest() {
+                invoice = new Invoice();
+        }
 
 	@Test
 	public void testEmptyInvoiceHasEmptySubtotal() {

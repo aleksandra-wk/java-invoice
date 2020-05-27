@@ -6,6 +6,9 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class FuelCanister extends ExciseDutyProduct {
+    
+    public static final int freeMonth = 4;
+    public static final int freeDay = 26;
 
     public FuelCanister(String name, BigDecimal price) {
         super(name, price);
@@ -19,7 +22,7 @@ public class FuelCanister extends ExciseDutyProduct {
         
         BigDecimal excise;
         
-        if (month == 4 && day == 26) {
+        if ((month == freeMonth) && (day == freeDay)) {
             excise = this.getExciseDuty();
         } else {
             excise = BigDecimal.ZERO;
