@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -18,11 +19,6 @@ import pl.edu.agh.mwo.invoice.product.FuelCanister;
 
 public class InvoiceTest {
 	private Invoice invoice;
-
-	@Before
-	public void createEmptyInvoiceForTheTest() {
-		invoice = new Invoice();
-	}
 
 	@Test
 	public void testEmptyInvoiceHasEmptySubtotal() {
