@@ -12,6 +12,9 @@ import pl.edu.agh.mwo.invoice.product.DairyProduct;
 import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
 import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+import pl.edu.agh.mwo.invoice.product.ExciseDutyProduct;
+import pl.edu.agh.mwo.invoice.product.BottleOfWine;
+import pl.edu.agh.mwo.invoice.product.FuelCanister;
 
 public class InvoiceTest {
 	private Invoice invoice;
@@ -169,6 +172,18 @@ public class InvoiceTest {
             invoice.addProduct(product1, 5);
             String printout = invoice.printInvoice();
             Assert.assertEquals(String.valueOf(7),printout.split("\n")[1].split(" ")[1].split(",")[0]);
+        }
+        
+        @Test
+        public void testTaxesCorrectnessForWine() {
+            Product product1 = new BottleOfWine("Wino truskawkowe", new BigDecimal("10"));
+            Assert.assertThat(new BigDecimal("15.56"), Matchers.comparesEqualTo(product1.getPriceWithTax()));
+        }
+        
+        @Test
+        public void testTaxesCorrectnessForFuel() {
+            Product product1 = new BottleOfWine("Kanister U95", new BigDecimal("25"));
+            Assert.assertThat(new BigDecimal("30.56"), Matchers.comparesEqualTo(product1.getPriceWithTax()));
         }
 }
 
