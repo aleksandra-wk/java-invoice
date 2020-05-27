@@ -150,4 +150,25 @@ public class InvoiceTest {
 	    String printout = invoice.printInvoice();
 	    Assert.assertEquals(String.format("%.2f", 199.99),printout.split("\n")[1].split(" ")[2]);
 	}
+	
+	@Test
+	public void testPrintedInvoiceListsOnceEvenIfAddedMultipleTimes() {
+	    Product product1 = new TaxFreeProduct("Chleb", new BigDecimal("5"));
+	    Product product2 = new DairyProduct("Chedar", new BigDecimal("10"));
+            invoice.addProduct(product1, 2);
+            invoice.addProduct(product2, 3);
+            invoice.addProduct(product1, 5);
+            String printout = invoice.printInvoice();
+            Assert.assertEquals("Liczba pozycji: " + String.valueOf(2),printout.split("\n")[3]);
+	}
+	
+        @Test
+        public void testPrintedInvoiceAddsAmountsOfTheSameProduct() {
+            Product product1 = new TaxFreeProduct("Chleb", new BigDecimal("5"));
+            invoice.addProduct(product1, 2);
+            invoice.addProduct(product1, 5);
+            String printout = invoice.printInvoice();
+            Assert.assertEquals(String.valueOf(7),printout.split("\n")[1].split(" ")[1].split(",")[0]);
+        }
 }
+

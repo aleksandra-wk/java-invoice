@@ -10,6 +10,11 @@ public class Invoice {
 
     private static int currentNumber = 1;
     private Map<Product, Integer> products = new HashMap<Product, Integer>();
+    
+    public Map<Product, Integer> getProducts() {
+        return products;
+    }
+
     private int number;
 
     public Invoice() {
@@ -25,7 +30,11 @@ public class Invoice {
         if (product == null || quantity <= 0) {
             throw new IllegalArgumentException();
         }
-        products.put(product, quantity);
+        if (this.getProducts().containsKey(product)) {
+            products.put(product, this.getProducts().get(product) + quantity);
+        } else {
+            products.put(product, quantity);
+        }
     }
 
     public BigDecimal getNetTotal() {
